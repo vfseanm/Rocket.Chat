@@ -1,12 +1,13 @@
 FROM rocketchat/base:4
 
-RUN example-build-run.sh
-
 USER rocketchat
 
 VOLUME /app/uploads
 
 WORKDIR /app/bundle
+RUN curl https://install.meteor.com/ | /bin/sh
+ADD . /app/bundle 
+RUN ./example-build-run.sh
 
 # needs a mongoinstance - defaults to container linking with alias 'mongo'
 ENV DEPLOY_METHOD=docker \
