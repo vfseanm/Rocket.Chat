@@ -1,21 +1,6 @@
 FROM rocketchat/base:4
 
-ENV RC_VERSION 0.59.0-develop
-
-MAINTAINER buildmaster@rocket.chat
-
-RUN set -x \
- && curl -SLf "https://rocket.chat/releases/${RC_VERSION}/download" -o rocket.chat.tgz \
- && curl -SLf "https://rocket.chat/releases/${RC_VERSION}/asc" -o rocket.chat.tgz.asc \
- && mkdir /app \
- && gpg --verify rocket.chat.tgz.asc \
- && mkdir -p /app \
- && tar -zxf rocket.chat.tgz -C /app \
- && rm rocket.chat.tgz rocket.chat.tgz.asc \
- && cd /app/bundle/programs/server \
- && npm install \
- && npm cache clear \
- && chown -R rocketchat:rocketchat /app
+RUN example-build-run.sh
 
 USER rocketchat
 
